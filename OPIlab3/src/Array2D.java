@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Array2D extends Array1D {
@@ -15,31 +16,74 @@ public class Array2D extends Array1D {
         }
     }
 
-    public void sortTheLongestLineRow() {
-        int indexOfLongest = 0;
+    public void Max() {
+        if (MaxNegative() > MinPositive()) {
+            for (int i = 0; i < array2D.length; i++) {
+                array2D[i].sort2();
+            }
+        } else if (MaxNegative() < MinPositive()){
+            for (int i = 0; i < array2D.length; i++) {
+                array2D[i].sort1();
+            }
 
+        }else{
+            return;
+        }
+
+    }
+
+    public int QuantityFirstLast() {
+        int indexOfLongest = 0;
         for (int i = 1; i < array2D.length; i++) {
             if (array2D[i].array1D.length > array2D[indexOfLongest].array1D.length) {
                 indexOfLongest = i;
             }
-        }
 
-        array2D[indexOfLongest].sort();
+        }
+        return array2D[indexOfLongest].QuantityFirstLast();
+    }
+    public int MaxNegative(){
+        int max = -1000000;
+        for(Array1D array1D : array2D){
+            for (int num : array1D.array1D) {
+                if (num < 0 && num > max){
+                    max = num;
+                }
+            }
+            if(max == -1000000) return 0;
+        }
+        return Math.abs(max);
     }
 
-    public void swapColumns() {
-        int indexOfLastNegative = array2D[0].getIndexOfLastNegative();
-        int indexOfSecondEven = array2D[0].getIndexOfSecondEven();
-
-        if (indexOfLastNegative == -1 || indexOfSecondEven == -1) {
-            System.out.println("Такого элемента не существует");
-            return;
-        }
-
+    public int MinPositive() {
+        int min = 100000;
         for (Array1D array1D : array2D) {
-            array1D.swapElements(indexOfLastNegative, indexOfSecondEven);
+            for (int num : array1D.array1D) {
+                if (num >= 0 && num < min) {
+                    min = num;
+                }
+            }
+            if (min == 100000) return 0;
         }
+        return min;
     }
+
+    public int AVG(){
+
+        int count = 0;
+        int k = 0;
+        for (Array1D array1D : array2D) {
+            for (int num : array1D.array1D) {
+                if(Math.abs(num) % 3 == 0){
+                    count++;
+                    k+=Math.abs(num);
+                }
+            }
+            }
+        if (count == 0) return 0;
+        return (k / count);
+    }
+
 
     public void printArray2D() {
         for (Array1D array1D : array2D) {
